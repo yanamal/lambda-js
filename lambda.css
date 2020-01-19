@@ -1,0 +1,27 @@
+.token {
+    margin: 5px;
+    border-style: dotted;
+    border-width: thin;
+    padding: 5px;
+    border-color: gray;
+    height: fit-content;
+    align-self: center;
+}
+
+.list {
+    padding: 2px;
+    border-style: dashed;
+    border-width: thin;
+    display: inline-flex;
+    border-color: cadetblue;
+}
+
+.list .list:before {
+    content:'(';
+    align-self: center;
+}
+
+.list .list:after {
+    content:')';
+    align-self: center;
+}
