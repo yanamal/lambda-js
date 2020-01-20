@@ -107,7 +107,7 @@ let draw_expression = function(lambda_expression) {
         }
         else {
             //this is a lambda thing
-            expr.html('&lambda;.'+lambda_expression['lambda'])
+            expr.html('&lambda;'+lambda_expression['lambda']+'.')
         }
     }
     return expr
