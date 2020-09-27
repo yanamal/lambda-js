@@ -33,7 +33,7 @@ function set_expr_reset_display(expr_obj) {
     reset_expression_element()
 
     // set up clickable next step:
-    next_step = prepare_next_step() 
+    prepare_next_step() 
     console.log(next_step)
 }
 
@@ -62,14 +62,19 @@ function prepare_next_step() {
         ]
     }
 
-    // set up next clickable element
-    active_elem.one('click', show_next_step)
-
-    return {
+    next_step = {
         message: _message,
         highlight_color: highlight_color,
         highlight_elems: highlight_elems,
         active_elem: active_elem
+    }
+
+    // set up next clickable element, OR activate next step right away if it's a symbol replacement
+    if(_message.startsWith('Replaced')) {
+        show_next_step()
+    }
+    else {
+        active_elem.one('click', show_next_step)
     }
 }
 
@@ -83,7 +88,7 @@ function show_next_step(){
     $('#expression').append(make_row(next_step.message, expr))
 
     // prepare next step
-    next_step = prepare_next_step() 
+    prepare_next_step() 
 }
 
 // Show expression to evaluate:
