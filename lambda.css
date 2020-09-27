@@ -26,16 +26,31 @@
     align-self: center;
 }
 
+
+/*The rest is page styling, not lambda calculus styling.
+TODO: move to some other style file?*/
 #side_by_side {
     display: flex;
     flex-direction: row;
+    width:95%;
 }
 
 #expression_box {
     display: inline-block;
     flex-grow: 1;
+    margin:10px;
 }
 
 #symbol_box {
     display: inline-block;
+    flex-shrink: 0
+}
+
+#explanation div{
+    margin-bottom: 20px;
+}
+
+table.expr_table td {
+    border:1px black solid;
+    padding:10px
 }

@@ -1,0 +1,50 @@
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="lambda.css"><!--
+Functional programming asks: "what if functions could also be used as things/values?"
+Lambda calculs asks: "what if all things were functions?"
+
+(part of it is) What if all concepts - True/false, integers, boolean operations - could be described in terms of some behavior they have when given some inputs; 
+and these behaviors, combined, produced a sensible/desired output which is consistent with what we expect from true/false, numbers, etc.
+
+In Lambda Calculus, each symbol is both a thing/object and a function??
+
+you recursively expand or apply the very first element , until you are done. (only one element left, OR can't expand/apply for some other reason)
+
+the goal (of defining new 'functions') is to make it so that when it's expanded with the right 'input', it resolves down to some "known" terminal symbol
+(in the case of boolean lambda calculus, TRUE or FALSE). They're terminal even though they're not really terminal (they have an expansion) because they are what we care about
+
+You can't always expand everything all the way down, especially without reducing - there's not  always a "bottom"
+-->
+In lambda calculus, each symbol (TRUE, FALSE, ...) is both a thing and a function, all the time. <br/>
+In this implementation, once the evaluation reaches a state with just one symbol (usually, TRUE or FALSE), it stops; in effect, we try to "expand"
+a symbol and evaluate it as a funciton, until we just have one left; at that point, we consider it as the "final" return value.
+
+<h2>To evaluate</h2>
+Repeatedly click on the expression below.
+<h2>To change the expression</h2>
+Type in a <b>space separated list of symbols</b> from the list on the right.
+<br/>
+<b>No other type of input is implemented (yet)</b>.
+<hr/>
+
+
+
+<script src="lambda.js"></script>
+<div>
+    <input type="text" id="new_expr"></input>
+    <button id="reset_button">Set Expression</button>
+</div>
+<div style="display:inline-block;">
+    <table  id="expression">
+    </table>
+</div> 
+
+<div style="float:right;" id="symbols"></div>
+<script src="display.js"></script>
+<script>
+    // reset expression on button click
+    $('#reset_button').click( function(){
+        expr = parse_expression_string($('#new_expr').val())
+        reset_expression_element()
+    })
+</script>

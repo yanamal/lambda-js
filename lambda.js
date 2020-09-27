@@ -4,7 +4,7 @@ let named_symbols = {
     'FALSE_AKA_CHOOSE_SECOND': [{'lambda':'w'}, {'lambda':'z'}, 'z'],
     'NOT': [{'lambda':'a'}, 'a','FALSE_AKA_CHOOSE_SECOND','TRUE_AKA_CHOOSE_FIRST'],
     'AND':[{'lambda':'b'}, {'lambda':'c'}, 'b', 'c', 'FALSE_AKA_CHOOSE_SECOND'],
-    'OR': [{'lambda':'e'}, {'lambda':'f'}, 'e', 'TRUE_AKA_CHOOSE_FIRST', 'f'],
+    //'OR': [{'lambda':'e'}, {'lambda':'f'}, 'e', 'TRUE_AKA_CHOOSE_FIRST', 'f'],
 }
 
 

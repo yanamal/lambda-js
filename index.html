@@ -1,50 +1,129 @@
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="lambda.css"><!--
-Functional programming asks: "what if functions could also be used as things/values?"
-Lambda calculs asks: "what if all things were functions?"
+<!doctype html>
 
-(part of it is) What if all concepts - True/false, integers, boolean operations - could be described in terms of some behavior they have when given some inputs; 
-and these behaviors, combined, produced a sensible/desired output which is consistent with what we expect from true/false, numbers, etc.
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lambda Calculus Visualizer</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="lambda.js"></script>
+  <link rel="stylesheet" type="text/css" href="lambda.css">
+</head>
 
-In Lambda Calculus, each symbol is both a thing/object and a function??
+<body>
+    <h1>Lambda Calculus interactive visualizer</h1>
+    <div id="explanation">
+        <div>
+            <b>Functional programming</b> asks (among other things): What if functions could also be used as values?
+            <br/>
+            <b>Lambda Calculs</b> asks: What if functions were <em>the only kind of value</em> you could have? What if <em>everything</em> was functions?
+        </div>
 
-you recursively expand or apply the very first element , until you are done. (only one element left, OR can't expand/apply for some other reason)
+        <div>
+            For example, let's say we want to represent boolean logic using lambda calculus. Operators like AND, OR, NOT would of course be functions. 
+            <br/>
+            But so would the values TRUE and FALSE! They are functions defined in a very clever way, such that any valid boolean expression actually does evaluate to the correct TRUE or FALSE value/function/thing. 
+        </div>
 
-the goal (of defining new 'functions') is to make it so that when it's expanded with the right 'input', it resolves down to some "known" terminal symbol
-(in the case of boolean lambda calculus, TRUE or FALSE). They're terminal even though they're not really terminal (they have an expansion) because they are what we care about
+        <div>
+            TRUE is defined as <code><b>(&lambda;x. &lambda;y. x)</b></code>.  This means that it takes one argument (x), then takes another argument(y), and returns the first argument.
+            <br/>
+            FALSE is the opposite: it returns the second argument.
+        </div>
 
-You can't always expand everything all the way down, especially without reducing - there's not  always a "bottom"
--->
-In lambda calculus, each symbol (TRUE, FALSE, ...) is both a thing and a function, all the time. <br/>
-In this implementation, once the evaluation reaches a state with just one symbol (usually, TRUE or FALSE), it stops; in effect, we try to "expand"
-a symbol and evaluate it as a funciton, until we just have one left; at that point, we consider it as the "final" return value.
+        <div>
+            Lambda calculus is actually quite simple to evaluate. There are really only two things you can do:
+            <ol>
+                <li>
+                    <b>Replace</b> a symbol with its definition. For example:
+                    <br/>
+                    <code><b>TRUE</b> THING_A THING_B</code> &#10230 <br/>
+                    <code><b>(&lambda;x. &lambda;y. x)</b> THING_A THING_B</code>
+                </li>
+                <li>
+                    <b>Apply</b> a value to a lambda argument. You take the firsst thing <b>after</b> of a lambda expression, and then use it to replace the first lambda variable <b>inside</b> of that expression. 
+                    For example:
+                    <br>
+                    <code>(<b>&lambda;x.</b> &lambda;y. x) <b>THING_A</b> THING_B</code> &#10230 <br/>
+                    <code>(&lambda;y. <b>THING_A</b>)  THING_B </code>
+                </li>
+            </ol>
+            If you keep doing that in the right order to a well-formed expression, you should eventually arrive at the correct answer.
+            <br/>
+            "Wait, what do you mean by the <em>right</em> order?!" - you might be asking.
+            <br/>
+            Well, if you get unlucky with your choice of order, it's possible to run into infinite expansion loops and never get anywhere useful. 
+            <br/>
+            For this reason, a common convention is to always replace or apply the <b>left-most</b> thing you can do that operation to. And this <em>usually</em> works out fine.
+        </div>
+        <h2>Try it out!</h2>
+        <div>
+            Enough words! Below are links to some interactive examples of using lambda calculus for simple boolean logic.
+            In these visualizations, the <b>Replace</b> step is done automatically for you. 
+            You will have to trigger each <b>Apply</b> step by clicking on the <em>value</em> which should be applied to a lambda variable.
+        </div>
 
-<h2>To evaluate</h2>
-Repeatedly click on the expression below.
-<h2>To change the expression</h2>
-Type in a <b>space separated list of symbols</b> from the list on the right.
-<br/>
-<b>No other type of input is implemented (yet)</b>.
-<hr/>
+        <div>
+            In these examples, TRUE and FALSE are renamed into TRUE_AKA_CHOOSE_FIRST and FALSE_AKA_CHOOSE_SECOND to emphasize the fact that they are functions.
+        </div>
+
+        <h3>Not</h3>
+        <table class="expr_table">
+            <tr>
+                <th></th>
+                <th>
+                    NOT
+                </th>
+            </tr>
+            <tr>
+                <th>TRUE</th>
+                <td><a href='expand.html?expr=NOT%20TRUE_AKA_CHOOSE_FIRST' target='_'>NOT TRUE</a></td>
+            </tr>
+            <tr>
+                <th>FALSE</th>
+                <td><a href='expand.html?expr=NOT%20FALSE_AKA_CHOOSE_SECOND' target='_'>NOT FALSE</a></td>
+            </tr>
+        </table>
+
+        <h3>And</h3>
+        <table class="expr_table">
+            <tr>
+                <th></th>
+                <th>
+                    TRUE
+                </th>
+                <th>
+                    FALSE
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    TRUE
+                </th>
+                <td>
+                    <a href='expand.html?expr=AND%20TRUE_AKA_CHOOSE_FIRST%20TRUE_AKA_CHOOSE_FIRST' target='_'>AND TRUE TRUE</a>
+                </td>
+                <td>
+                    <a href='expand.html?expr=AND%20FALSE_AKA_CHOOSE_SECOND%20TRUE_AKA_CHOOSE_FIRST' target='_'>AND FALSE TRUE</a>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    FALSE
+                </th>
+                <td>
+                    <a href='expand.html?expr=AND%20TRUE_AKA_CHOOSE_FIRST%20FALSE_AKA_CHOOSE_SECOND' target='_'>AND TRUE FALSE</a>
+                </td>
+                <td>
+                    <a href='expand.html?expr=AND%20FALSE_AKA_CHOOSE_SECOND%20FALSE_AKA_CHOOSE_SECOND' target='_'>AND FALSE FALSE</a>
+                </td>
+            </tr>
+        </table>
 
 
-
-<script src="lambda.js"></script>
-<div>
-    <input type="text" id="new_expr"></input>
-    <button id="reset_button">Set Expression</button>
-</div>
-<div style="display:inline-block;">
-    <table  id="expression">
-    </table>
-</div> 
-
-<div style="float:right;" id="symbols"></div>
-<script src="display.js"></script>
-<script>
-    // reset expression on button click
-    $('#reset_button').click( function(){
-        expr = parse_expression_string($('#new_expr').val())
-        reset_expression_element()
-    })
-</script>
+        <h4>Or</h4>
+        Left as a (paper-based) exercise for the user.
+        <br/>
+        Can you figure out what OR should be, based on how NOT and AND work?
+    </div>
+</body>
+</html>
