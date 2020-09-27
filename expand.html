@@ -1,0 +1,35 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Expand expression</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="lambda.js"></script>
+  <link rel="stylesheet" type="text/css" href="lambda.css">
+</head>
+
+<body>
+    <h2>Expand expression:</h2>
+    <div id='expr_display'></div>
+    <button id="reset_button" onclick="reset_all()">Reset</button>
+    <hr/>
+    <div style="display:inline-block;">
+        <table id="expression">
+        </table>
+    </div> 
+    <div style="float:right;" id="symbols"></div>
+
+
+    <script src="display.js"></script>
+    <script>
+        let params = new URLSearchParams(window.location.search)
+        function reset_all() {
+            console.log(params.get('expr'))
+            set_expr_reset_display(parse_expression_string(params.get('expr')))
+        }
+        reset_all()
+        $('#expr_display').append(make_row('',expr))
+    </script>
+</body>
+</html>

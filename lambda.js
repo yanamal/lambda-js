@@ -20,13 +20,19 @@ let apply_lambda = function(l, input_symbol) {
     if( l.length> 0 // if there actually are any symbols in the lambda expression (list of symbols)
         && 'lambda' in l[0] ){ // if first symbol is actually a lambda
         to_replace = l[0]['lambda']
+        // TODO: deep copy input symbol just in case? could try JSON.parse(JSON.stringify(input_symbol))
         return l.slice(1).map(e => (e==to_replace)?input_symbol:e)
         // TODO: recurse.
+        // TODO: allow for 'variable' reuse in named symbols?.. is it OK already assuming bound/unbound separation?..
+        // Distinguish between "unbound" (f (x x)) and "bound" (lambda x. f(x x)) - don't continue replacement down into bound
     }
     return null; // not a lambda up front; do nothing.
 }
 
-// given an expression, take a step in evaluating/expanding it
+
+// given an expression, take a step in evaluating/expanding it.
+// This is a recursve function: if the first elemen of the expression is an array (i.e. another non-trivial expression),
+// it recurses into that array, passing the original expression as parent/context.
 let evaluate_step = function(lambda_expression, parent_expression = null) {
     if (!Array.isArray(lambda_expression)){
         return [lambda_expression, 'Single token remaining, can\'t expand further']
@@ -61,7 +67,7 @@ let evaluate_step = function(lambda_expression, parent_expression = null) {
 
         if(first_token in named_symbols) {
             lambda_expression[0] = named_symbols[first_token]
-            return [lambda_expression, `Replaced symbol '${first_token}' with formula`] 
+            return [lambda_expression, `Replaced symbol '${first_token}' with expression`] 
         }
         else {
             return [lambda_expression, `stuck: undefined symbol '${first_token}'`]
