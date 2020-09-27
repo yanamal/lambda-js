@@ -1,10 +1,10 @@
 
 let named_symbols = {
-    'TRUE': [{'lambda':'x'}, {'lambda':'y'}, 'x'],
-    'FALSE': [{'lambda':'w'}, {'lambda':'z'}, 'z'],
-    'NOT': [{'lambda':'a'}, 'a','FALSE','TRUE'],
-    'AND':[{'lambda':'b'}, {'lambda':'c'}, 'b', 'c', 'FALSE'],
-    'OR': [{'lambda':'e'}, {'lambda':'f'}, 'e', 'TRUE', 'f'],
+    'TRUE_AKA_CHOOSE_FIRST': [{'lambda':'x'}, {'lambda':'y'}, 'x'],
+    'FALSE_AKA_CHOOSE_SECOND': [{'lambda':'w'}, {'lambda':'z'}, 'z'],
+    'NOT': [{'lambda':'a'}, 'a','FALSE_AKA_CHOOSE_SECOND','TRUE_AKA_CHOOSE_FIRST'],
+    'AND':[{'lambda':'b'}, {'lambda':'c'}, 'b', 'c', 'FALSE_AKA_CHOOSE_SECOND'],
+    'OR': [{'lambda':'e'}, {'lambda':'f'}, 'e', 'TRUE_AKA_CHOOSE_FIRST', 'f'],
 }
 
 

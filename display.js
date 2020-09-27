@@ -2,13 +2,14 @@
 // in elements with ids 'expression' and 'symbols'
 
 
-expr = ['AND', 'FALSE', 'TRUE'] // global var storing "current" expression
+expr = ['AND', 'FALSE_AKA_CHOOSE_SECOND', 'TRUE_AKA_CHOOSE_FIRST'] // global var storing "current" expression
 next_step = {}// global variable: track what we should do when next step is taken
 
 
 function make_row(message, expression) {
+    //  TODO: actually use expression parameter (make sure it doesn't break?)
     row = $('<tr ">')
-    message_col = $('<td style="width:50%">').append(message)
+    message_col = $('<td style="width:30%">').append(message)
     expr_col = $('<td class="expr">').append(draw_expression(expr))
     row.append(message_col)
     row.append(expr_col)

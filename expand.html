@@ -10,25 +10,29 @@
 </head>
 
 <body>
+    <h2>Symbols:</h2>
+    <div id="symbols"></div>
+    <hr/>    
     <h2>Expand expression:</h2>
     <div id='expr_display'></div>
     <button id="reset_button" onclick="reset_all()">Reset</button>
     <hr/>
+
     <div style="display:inline-block;">
         <table id="expression">
         </table>
     </div> 
-    <div style="float:right;" id="symbols"></div>
 
 
     <script src="display.js"></script>
     <script>
         let params = new URLSearchParams(window.location.search)
         // TODO: refactor to not repeat parse_expression_string(params.get('expr'))
-        $('#expr_display').append(make_row('',parse_expression_string(params.get('expr'))))
+        expr = parse_expression_string(params.get('expr'))
+        $('#expr_display').append(draw_expression(expr))
         function reset_all() {
             console.log(params.get('expr'))
-            set_expr_reset_display(parse_expression_string(params.get('expr')))
+            set_expr_reset_display(expr)
         }
         reset_all()
     </script>
