@@ -24,12 +24,13 @@
     <script src="display.js"></script>
     <script>
         let params = new URLSearchParams(window.location.search)
+        // TODO: refactor to not repeat parse_expression_string(params.get('expr'))
+        $('#expr_display').append(make_row('',parse_expression_string(params.get('expr'))))
         function reset_all() {
             console.log(params.get('expr'))
             set_expr_reset_display(parse_expression_string(params.get('expr')))
         }
         reset_all()
-        $('#expr_display').append(make_row('',expr))
     </script>
 </body>
 </html>

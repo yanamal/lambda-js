@@ -3,6 +3,7 @@
 
 
 expr = ['AND', 'FALSE', 'TRUE'] // global var storing "current" expression
+next_step = {}// global variable: track what we should do when next step is taken
 
 
 function make_row(message, expression) {
@@ -26,9 +27,14 @@ function reset_expression_element(){
     $('#expression').append(make_row('',expr))
 }
 
+
 function set_expr_reset_display(expr_obj) {
     expr = expr_obj
     reset_expression_element()
+
+    // set up clickable next step:
+    next_step = prepare_next_step() 
+    console.log(next_step)
 }
 
 // Prepare, but do not yet display, the next step in the evaluation 
@@ -56,6 +62,9 @@ function prepare_next_step() {
         ]
     }
 
+    // set up next clickable element
+    active_elem.one('click', show_next_step)
+
     return {
         message: _message,
         highlight_color: highlight_color,
@@ -65,24 +74,20 @@ function prepare_next_step() {
 }
 
 function show_next_step(){
-    // prepare the next step
-    let next_step = prepare_next_step()
     console.log(next_step)
-    let message = next_step.message
-    
     //highlght appropriate elements from previous step
     for(el of next_step.highlight_elems)  {
         el.css('background-color', next_step.highlight_color)
     }
     // show the next step and message
-    $('#expression').append(make_row(message, expr))
+    $('#expression').append(make_row(next_step.message, expr))
 
-    // set up next clickable element
-    next_step.active_elem.one('click', show_next_step)
+    // prepare next step
+    next_step = prepare_next_step() 
 }
 
 // Show expression to evaluate:
-$('#expression').one('click',show_next_step)
+//$('#expression').one('click',show_next_step)
 
 // Show named symbols:
 for(s_name in named_symbols) {
