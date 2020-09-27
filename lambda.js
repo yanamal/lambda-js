@@ -34,6 +34,7 @@ let apply_lambda = function(l, input_symbol) {
 // This is a recursve function: if the first elemen of the expression is an array (i.e. another non-trivial expression),
 // it recurses into that array, passing the original expression as parent/context.
 let evaluate_step = function(lambda_expression, parent_expression = null) {
+    // TODO: this modifies lambda_expression in place.
     if (!Array.isArray(lambda_expression)){
         return [lambda_expression, 'Single token remaining, can\'t expand further']
     }

@@ -31,22 +31,58 @@ function set_expr_reset_display(expr_obj) {
     reset_expression_element()
 }
 
-// Show expression to evaluate:
-$('#expression').append(make_row('',expr))
-$('#expression').click(function(){
-    [expr, message] = evaluate_step(expr)
+// Prepare, but do not yet display, the next step in the evaluation 
+// (return info necessary for display)
+function prepare_next_step() {
+    [expr, _message] = evaluate_step(expr)
+
     // Hacks - modify the previous row to highlight changes, based on the message
-    ft = $('#expression .expr').last().find('.token').first() // the first token of the last expression
-    if(message.startsWith('Replaced')) {
-        ft.css('background-color', 'antiquewhite')
+    let ft = $('#expression .expr').last().find('.token').first() // the first token of the last expression
+
+    let highlight_color = ''
+    let highlight_elems = []
+    let active_elem = $('#expression .expr').last() // By default, the active (clickable) element is the whole previous expression
+    if(_message.startsWith('Replaced')) {
+        highlight_color = 'antiquewhite'
+        highlight_elems = [ft] // the replaced  token
+        active_elem = ft
     }
-    else if(message.startsWith('Applied')) {
-        ft.css('background-color', 'lightgreen')
-        ft.parent().next().css('background-color', 'lightgreen')
+    else if(_message.startsWith('Applied')) {
+        highlight_color = 'lightgreen'
+        active_elem = ft.parent().next() // The thing being applied to the lambda
+        highlight_elems = [
+            ft, // The replaced lambda
+            active_elem
+        ]
     }
-    // draw new expression
+
+    return {
+        message: _message,
+        highlight_color: highlight_color,
+        highlight_elems: highlight_elems,
+        active_elem: active_elem
+    }
+}
+
+function show_next_step(){
+    // prepare the next step
+    let next_step = prepare_next_step()
+    console.log(next_step)
+    let message = next_step.message
+    
+    //highlght appropriate elements from previous step
+    for(el of next_step.highlight_elems)  {
+        el.css('background-color', next_step.highlight_color)
+    }
+    // show the next step and message
     $('#expression').append(make_row(message, expr))
-})
+
+    // set up next clickable element
+    next_step.active_elem.one('click', show_next_step)
+}
+
+// Show expression to evaluate:
+$('#expression').one('click',show_next_step)
 
 // Show named symbols:
 for(s_name in named_symbols) {
