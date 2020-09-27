@@ -25,3 +25,17 @@
     content:')';
     align-self: center;
 }
+
+#side_by_side {
+    display: flex;
+    flex-direction: row;
+}
+
+#expression_box {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+#symbol_box {
+    display: inline-block;
+}

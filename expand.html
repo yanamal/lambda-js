@@ -10,11 +10,19 @@
 </head>
 
 <body>
-    <h2>Symbols:</h2>
-    <div id="symbols"></div>
-    <hr/>    
-    <h2>Expand expression:</h2>
-    <div id='expr_display'></div>
+
+    <div id='side_by_side'>
+        <div id='expression_box'>
+            <h2>Expand expression:</h2>
+            <div id='expr_display'></div>
+        </div>
+
+        <div id='symbol_box'>
+            <h2>Symbols:</h2>
+            <div id="symbols"></div>
+        </div>
+    </div>
+
     <button id="reset_button" onclick="reset_all()">Reset</button>
     <hr/>
 
@@ -28,11 +36,12 @@
     <script>
         let params = new URLSearchParams(window.location.search)
         // TODO: refactor to not repeat parse_expression_string(params.get('expr'))
-        expr = parse_expression_string(params.get('expr'))
-        $('#expr_display').append(draw_expression(expr))
+        //  (but also make sure to make a *copy* of an exprerssion object each time you resset)
+        param_expr_str = params.get('expr')
+        $('#expr_display').append(draw_expression(parse_expression_string(param_expr_str)))
         function reset_all() {
-            console.log(params.get('expr'))
-            set_expr_reset_display(expr)
+            console.log(param_expr_str)
+            set_expr_reset_display(parse_expression_string(param_expr_str))
         }
         reset_all()
     </script>
