@@ -13,6 +13,16 @@ function make_row(message, expression) {
     expr_col = $('<td class="expr">').append(draw_expression(expr))
     row.append(message_col)
     row.append(expr_col)
+    
+    $('#expression').append(row)
+
+    // Hack - highlight first function - the one that is getting expanded/worked on
+    let active_function = $('#expression .expr').last().find('>span>*').first()
+    active_function.css({
+        'border-color': 'orange',
+        'border-width': 'medium'
+    })
+
     return row
 }
 
@@ -25,7 +35,7 @@ function parse_expression_string(expr_str) {
 // (probably to be coupled with some kind of expression-resetting)
 function reset_expression_element(){
     $('#expression').empty()
-    $('#expression').append(make_row('',expr))
+    make_row('',expr)
 }
 
 
@@ -112,7 +122,7 @@ function show_next_step(){
                     el.css('background-color', next_step.highlight_color)
                 }
                 // show the next step and message
-                $('#expression').append(make_row(next_step.message, expr))
+                make_row(next_step.message, expr)
 
                 // prepare next step
                 prepare_next_step() 
@@ -128,7 +138,7 @@ function show_next_step(){
             el.css('background-color', next_step.highlight_color)
         }
         // show the next step and message
-        $('#expression').append(make_row(next_step.message, expr))
+        make_row(next_step.message, expr)
 
         // prepare next step
         prepare_next_step() 
