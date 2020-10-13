@@ -34,8 +34,14 @@ function set_expr_reset_display(expr_obj) {
     reset_expression_element()
 
     // set up clickable next step:
-    prepare_next_step() 
-    console.log(next_step)
+    setTimeout(
+        function() 
+        {
+            prepare_next_step() 
+            console.log(next_step)
+        }, 
+        1000
+    )
 }
 
 // Prepare, but do not yet display, the next step in the evaluation 

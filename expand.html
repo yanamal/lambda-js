@@ -52,7 +52,9 @@
             console.log(param_expr_str)
             set_expr_reset_display(parse_expression_string(param_expr_str))
         }
-        reset_all()
+        window.onload = function(){
+            reset_all()
+        }
     </script>
 </body>
 </html>
