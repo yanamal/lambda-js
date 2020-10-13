@@ -2,7 +2,7 @@
 // in elements with ids 'expression' and 'symbols'
 
 
-expr = ['AND', 'FALSE_AKA_CHOOSE_SECOND', 'TRUE_AKA_CHOOSE_FIRST'] // global var storing "current" expression
+expr = ['AND_a_b', 'FALSE_aka_choose_b', 'TRUE_aka_choose_a'] // global var storing "current" expression
 next_step = {}// global variable: track what we should do when next step is taken
 
 
