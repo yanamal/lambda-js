@@ -5,6 +5,7 @@ let named_symbols = {
     'NOT': [{'lambda':'a'}, 'a','FALSE','TRUE'],
     'AND':[{'lambda':'a'}, {'lambda':'b'}, 'a', 'b', 'FALSE'],
     //'OR': [{'lambda':'e'}, {'lambda':'f'}, 'e', 'TRUE', 'f'],
+    'Y': [{'lambda':'f'}, [{'lambda': 'x'}, 'f', ['x', 'x']], [{'lambda': 'x'}, 'f', ['x', 'x']]]
 }
 
 
@@ -16,15 +17,44 @@ let expand = function(symbol) {
 }
 
 
-let apply_lambda = function(l, input_symbol) {
+let recursively_replace = function(l, input_expression, to_replace) {
+    // recursively replace to_replace with input_expression in l
+    // stop if same variable becomes "bound" in subexpression (i.e. we encounter another lambda to_replace. ...)
+    let new_l = JSON.parse(JSON.stringify(l)) // make a copy of l
+    for (let i = 0; i < new_l.length; i++) {
+        e = new_l[i]
+        if(e==to_replace) {
+            // This is the symbol to be replaced
+            console.log(`replacing ${e} with ${input_expression}`)
+            new_l[i] = JSON.parse(JSON.stringify(input_expression))
+            console.log(new_l)
+        }
+        else if(Array.isArray(e)) {
+            // this is a sub-expression - recurse
+            console.log(`recursing into ${e}`)
+            new_l[i] = recursively_replace(e, input_expression, to_replace)
+            console.log(new_l)
+        }
+        else {
+            // this must be a lambda expression - check that it doesn't bind the very same variable we are trying to replace(if it does, stop replacing here)
+            if(e['lambda']==to_replace) {
+                console.log(`stopping at ${e}`)
+                console.log(e)
+                break;
+            }
+        }
+    }
+    return new_l
+}
+
+let apply_lambda = function(l, input_expression) {
     if( l.length> 0 // if there actually are any symbols in the lambda expression (list of symbols)
         && 'lambda' in l[0] ){ // if first symbol is actually a lambda
         to_replace = l[0]['lambda']
-        // TODO: deep copy input symbol just in case? could try JSON.parse(JSON.stringify(input_symbol))
-        return l.slice(1).map(e => (e==to_replace)?input_symbol:e)
-        // TODO: recurse.
-        // TODO: allow for 'variable' reuse in named symbols?.. is it OK already assuming bound/unbound separation?..
-        // Distinguish between "unbound" (f (x x)) and "bound" (lambda x. f(x x)) - don't continue replacement down into bound
+        replace_in = l.slice(1)
+        console.log(input_expression, to_replace)
+        console.log(replace_in)
+        return recursively_replace(replace_in, input_expression, to_replace)
     }
     return null; // not a lambda up front; do nothing.
 }

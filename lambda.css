@@ -14,6 +14,7 @@
     border-width: thin;
     display: inline-flex;
     border-color: cadetblue;
+    margin-left: 5px;
 }
 
 .list .list:before {
@@ -26,6 +27,9 @@
     align-self: center;
 }
 
+.highlight {
+    background-color: lightgray;
+  }
 
 /*The rest is page styling, not lambda calculus styling.
 TODO: move to some other style file?*/
