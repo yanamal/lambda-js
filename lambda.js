@@ -118,7 +118,7 @@ let evaluate_step = function(lambda_expression, parent_expression = null) {
         lambda_expression = apply_lambda(lambda_expression, value)
         // TODO: handle (unlikely, broken) case that apply_lambda returns null
         parent_expression.splice(1,1) // remove the element we just substituted in
-        return [lambda_expression, `Applied lambda: replaced '${first_token.lambda}' with '${value}'`]
+        return [lambda_expression, `Applied lambda: replaced '${first_token.lambda}' with '${write_expression(value)}'`]
     }
     else if(parent_expression !== null){
         // We are nested inside some other parens, but there's no other thing inside those parens (parent_expression.length == 1)
@@ -150,6 +150,31 @@ let draw_expression = function(lambda_expression) {
         else {
             //this is a lambda thing
             expr.html('&lambda;'+lambda_expression['lambda']+'.')
+        }
+    }
+    return expr
+}
+
+let write_expression = function(lambda_expression) {
+    let expr = ''
+    if(Array.isArray(lambda_expression)){
+        // this is a list of tokens/symbols/whatever
+        children = lambda_expression.map(write_expression)
+        expr = '('
+        for(c of children) {
+            expr += c
+        }
+        expr += ')'
+    }
+    else {
+        // this is just a single token/symbol/whatever
+        if(typeof lambda_expression === 'string') {
+            // this is a symbol or variable
+            expr=lambda_expression
+        }
+        else {
+            //this is a lambda thing
+            expr = '&lambda;'+lambda_expression['lambda']+'. '
         }
     }
     return expr
