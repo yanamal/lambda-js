@@ -105,10 +105,43 @@ function prepare_next_step() {
     }
 }
 
+
+function highlight_lists() {
+    $('.list').mouseover(function(e)
+        {
+            console.log($(this))
+            e.stopPropagation();
+            $('.list').removeClass('highlight');
+            $(this).addClass('highlight');
+        });
+
+        $('.list').mouseout(function(e)
+        //$(document).on("mouseleave", '.list', function()
+        {
+            $(this).removeClass('highlight');
+        });
+}
+
+
+function actually_show() {
+    //highlght appropriate elements from previous step
+    for(el of next_step.highlight_elems)  {
+        el.css('background-color', next_step.highlight_color)
+    }
+    // show the next step and message
+    make_row(next_step.message, expr)
+
+    // prepare next step
+    prepare_next_step() 
+
+    highlight_lists()
+}
+
 function show_next_step(){
     console.log(next_step)
 
     if (next_step.flying_elem && next_step.flyto_elem) {
+        // do flying animation
         flying_copy = next_step.flying_elem.clone().insertBefore(next_step.flying_elem)
             .css("position","absolute")
             .css("background", "white")
@@ -117,31 +150,13 @@ function show_next_step(){
             done:function(){
                 flying_copy.remove()
 
-                //highlght appropriate elements from previous step
-                for(el of next_step.highlight_elems)  {
-                    el.css('background-color', next_step.highlight_color)
-                }
-                // show the next step and message
-                make_row(next_step.message, expr)
-
-                // prepare next step
-                prepare_next_step() 
+                actually_show()
             }
         }) 
     }
     else {
-
-        // TODO: don't duplicate code
-
-        //highlght appropriate elements from previous step
-        for(el of next_step.highlight_elems)  {
-            el.css('background-color', next_step.highlight_color)
-        }
-        // show the next step and message
-        make_row(next_step.message, expr)
-
-        // prepare next step
-        prepare_next_step() 
+        // just do the showing
+        actually_show()
         
     }
 
