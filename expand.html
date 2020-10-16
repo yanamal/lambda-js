@@ -47,13 +47,19 @@
     <script src="display.js"></script>
     <script>
         let params = new URLSearchParams(window.location.search)
-        // TODO: refactor to not repeat parse_expression_string(params.get('expr'))
-        //  (but also make sure to make a *copy* of an exprerssion object each time you resset)
-        param_expr_str = params.get('expr')
-        $('#expr_display').append(draw_expression(parse_expression_string(param_expr_str)))
+        if(params.has('expr'))
+        {
+            param_expr_str = params.get('expr')
+            param_expr = parse_expression_string(param_expr)
+        }
+        else {
+            // default expression:
+            param_expr = [[{'lambda':'x'}, 'x','x'],[{'lambda':'x'}, 'x','x']]
+        }
+        $('#expr_display').append(draw_expression(JSON.parse(JSON.stringify(param_expr))))
         function reset_all() {
-            console.log(param_expr_str)
-            set_expr_reset_display(parse_expression_string(param_expr_str))
+            //console.log(param_expr_str)
+            set_expr_reset_display(JSON.parse(JSON.stringify(param_expr)))
         }
         window.onload = function(){
             reset_all()
