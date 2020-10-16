@@ -79,11 +79,16 @@ let evaluate_step = function(lambda_expression, parent_expression = null) {
         // nested parens - recurse
         //console.log(lambda_expression, lambda_expression.length, first_token)
         [lambda_expression[0], message] = evaluate_step(first_token, lambda_expression)
-        if(lambda_expression.length === 1){
-            // TODO: do it as an explicit step?.. sometimes several in a row need to happen, but for some reason the recursion is iffy.
+
+        // Now that we consumed a sub-expression from lambda_expression, we may have ended up with (possibly several layers of) parens that contain just one thing.
+        // keep discarding the parens until this is not the case.
+        // we do this here to simplify the expression as soon as possible, and not have to deal with several unnesting steps
+        while(lambda_expression.length === 1 && Array.isArray(lambda_expression[0])){
             console.log('unnesting')
-            return [lambda_expression[0], message] // unnest in place if it's the only thing left
+            lambda_expression = lambda_expression[0] // unnest in place
         }
+
+
         return [lambda_expression, message]
     }
 

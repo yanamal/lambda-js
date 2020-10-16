@@ -109,7 +109,6 @@ function prepare_next_step() {
 function highlight_lists() {
     $('.list').mouseover(function(e)
         {
-            console.log($(this))
             e.stopPropagation();
             $('.list').removeClass('highlight');
             $(this).addClass('highlight');

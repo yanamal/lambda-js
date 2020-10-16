@@ -28,7 +28,7 @@
 }
 
 .highlight {
-    background-color: lightgray;
+    background: #eeeeee;
   }
 
 /*The rest is page styling, not lambda calculus styling.
