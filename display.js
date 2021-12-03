@@ -2,7 +2,7 @@
 // in elements with ids 'expression' and 'symbols'
 
 
-expr = ['AND', 'FALSE', 'TRUE'] // global var storing "current" expression
+expr = [[{'lambda':'x'}, {'lambda':'y'}, 'x', 'x', 'y'], 'FALSE', 'TRUE'] // global var storing "current" expression
 next_step = {}// global variable: track what we should do when next step is taken
 
 
