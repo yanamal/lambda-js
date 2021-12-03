@@ -54,7 +54,7 @@
         }
         else {
             // default expression:
-            param_expr = ['Y', [{'lambda': 'a'}, 'a']]  //[[{'lambda':'x'}, 'x','x'],[{'lambda':'x'}, 'x','x']]
+            param_expr = [[{'lambda':'x'}, {'lambda':'y'}, 'x', 'x', 'y'], 'FALSE', 'TRUE'] // ['Y', [{'lambda': 'a'}, 'a']]  //[[{'lambda':'x'}, 'x','x'],[{'lambda':'x'}, 'x','x']]
         }
         $('#expr_display').append(draw_expression(JSON.parse(JSON.stringify(param_expr))))
         function reset_all() {
