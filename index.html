@@ -15,7 +15,7 @@
         <div>
             <b>Functional programming</b> asks (among other things): What if functions could also be used as values?
             <br/>
-            <b>Lambda Calculs</b> asks: What if functions were <em>the only kind of value</em> you could have? What if <em>everything</em> was functions?
+            <b>Lambda Calculus</b> asks: What if functions were <em>the only kind of value</em> you could have? What if <em>everything</em> was a function?
         </div>
 
         <div>
@@ -25,7 +25,7 @@
         </div>
 
         <div>
-            TRUE is defined as <code><b>(&lambda;x. &lambda;y. x)</b></code>.  This means that it takes one argument (x), then takes another argument(y), and returns the first argument.
+            TRUE is defined as <code><b>(&lambda;x. &lambda;y. x)</b></code>.  This means that it takes one argument (x), then takes another argument (y), and returns the first argument.
             <br/>
             FALSE is the opposite: it returns the second argument.
         </div>
@@ -40,13 +40,13 @@
                     <code><b>(&lambda;x. &lambda;y. x)</b> THING_A THING_B</code>
                 </li>
                 <li>
-                    <b>Apply</b> a value to a lambda argument. You take the firsst thing <b>after</b> of a lambda expression, and then use it to replace the first lambda variable <b>inside</b> of that expression. 
+                    <b>Apply</b> a value to a lambda argument. You take the first thing <b>after</b> a lambda expression, and then use it to replace the first lambda variable <b>inside</b> of that expression. 
                     For example:
                     <br>
                     <code>(<b>&lambda;x.</b> &lambda;y. x) <b>THING_A</b> THING_B</code> &#10230 <br/>
                     <code>(&lambda;y. <b>THING_A</b>)  THING_B </code>
                     <br>
-                    Yes, the function goes inside the parentheses,but the values for arguments go outside of them! It's a bit unusual, but it makes a lot of sense once you get used to it.
+                    Yes, the function goes inside the parentheses, but the values for arguments go outside of them! It's a bit unusual, but it makes a lot of sense once you get used to it.
                 </li>
             </ol>
             If you keep doing that in the right order to a well-formed expression, you should eventually arrive at the correct answer.
